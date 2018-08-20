@@ -2,6 +2,7 @@ package controllers;
 
 import models.Cohort;
 import models.Student;
+import models.StudentPair;
 import spark.ModelAndView;
 import spark.template.velocity.VelocityTemplateEngine;
 
@@ -33,10 +34,21 @@ public class Controller {
 
             Cohort cohort1 = new Cohort("E23");
 
-            ArrayList<Student> students = cohort1.randomPair();
+            StudentPair studentPair = cohort1.randomPair();
             HashMap<String, Object> model = new HashMap<>();
-            model.put("students", students);
+            model.put("studentPair", studentPair);
             model.put("template", "pair.vtl");
+            return new ModelAndView(model, "layout.vtl");
+        }, velocityTemplateEngine);
+
+        get("/pairs", (req, res) -> {
+
+            Cohort cohort1 = new Cohort("E23");
+
+            ArrayList<StudentPair> pairs = cohort1.getAllPairs();
+            HashMap<String, Object> model = new HashMap<>();
+            model.put("pairs", pairs);
+            model.put("template", "pairs.vtl");
             return new ModelAndView(model, "layout.vtl");
         }, velocityTemplateEngine);
 

@@ -75,14 +75,30 @@ public class Cohort {
         return students.get(0);
     }
 
-    public ArrayList<Student> randomPair(){
+    public StudentPair randomPair(){
         shuffleStudents();
-        ArrayList<Student> pairOfStudents = new ArrayList<>();
+        StudentPair pairOfStudents = new StudentPair();
             for (Student student : this.students) {
-                if (pairOfStudents.size() < 2) {
-                    pairOfStudents.add(student);
+                if (pairOfStudents.getStudent1() == null) {
+                    pairOfStudents.addFirstStudent(student);
+                }
+                else if (pairOfStudents.getStudent2() == null){
+                    pairOfStudents.addSecondStudent(student);
                 }
             }
         return pairOfStudents;
+    }
+
+    public ArrayList<StudentPair> getAllPairs(){
+        shuffleStudents();
+        ArrayList<StudentPair> allPairs = new ArrayList<>();
+        int i;
+        for (i = 0; i < (students.size() / 2); i++){
+            StudentPair studentPair = new StudentPair();
+            studentPair.addFirstStudent(students.get(i * 2));
+            studentPair.addSecondStudent(students.get((i * 2) + 1));
+            allPairs.add(studentPair);
+        }
+        return allPairs;
     }
 }
